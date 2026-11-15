@@ -5,7 +5,7 @@
 AuraGen is a project that aims to simplify complex user interfaces based on cognitive friction and user interaction.
 
 ## My Contribution
-Member 1 – AI & Backend Developer
+Member 1 - AI & Backend Developer
 
 ## Day 1 Progress
 - Python environment configured.
@@ -14,12 +14,26 @@ Member 1 – AI & Backend Developer
 - Backend project structure created.
 - Environment verification completed.
 
+## Day 2 Progress
+- Integrated Google Gemini with LangChain.
+- Configured API key using environment variables.
+- Successfully tested Gemini API connection.
+- Generated the first React functional component.
+- Tested React JSX generation with Tailwind CSS.
+- Saved FinancialForm.jsx in generated_components.
+
+### AI Model
+Gemini 3.5 Flash-Lite
+
 ## Technologies
 - Python
 - LangChain
+- LangChain Google GenAI
 - FastAPI
 - Pydantic
 - Python-dotenv
+- React
+- Tailwind CSS
 
 ## Project Structure
 - backend/
@@ -29,6 +43,7 @@ Member 1 – AI & Backend Developer
 - generated_components/
 
 ## Setup
+
 Install dependencies:
 
 ```bash
@@ -42,4 +57,6 @@ python day1_check.py
 ```
 
 ## Current Status
-Day 1 – Environment setup completed.
+Day 1 - Environment setup completed.
+
+Day 2 - Gemini integration and first React component generation completed.
