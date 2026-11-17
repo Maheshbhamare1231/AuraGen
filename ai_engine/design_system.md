@@ -8,6 +8,7 @@ Day 2 generated FinancialForm.jsx.
 It will be updated after integration with
 the frontend design from Member 2.
 
+
 # AuraGen UI Design System
 
 ## 1. Project Overview
