@@ -5,9 +5,11 @@
 AuraGen aims to simplify complex user interfaces based on cognitive friction and user interaction.
 
 ## My Contribution
+
 Member 1 - AI & Backend Developer
 
 ## Day 1 Progress
+
 - Python environment configured.
 - Virtual environment created.
 - Required Python packages installed.
@@ -15,14 +17,45 @@ Member 1 - AI & Backend Developer
 - Environment verification completed.
 
 ## Day 2 Progress
+
 - Integrated Google Gemini with LangChain.
 - Configured API key using environment variables.
 - Successfully tested Gemini API connection.
 - Generated the first React functional component.
 - Tested React JSX generation with Tailwind CSS.
-- Saved `FinancialForm.jsx` in `generated_components/`.
+- Saved FinancialForm.jsx in generated_components.
 
-### AI Model
+## Day 3 Progress
+
+- Created ai_engine/design_system.md.
+- Defined AuraGen UI design guidelines.
+- Documented colors, typography, spacing and component styling.
+- Added React component development guidelines.
+- Defined accessibility requirements.
+- Established guidelines for simplifying complex forms while maintaining design consistency.
+
+## Day 4 Progress
+
+- Created ai_engine/prompts.py.
+- Implemented dynamic design-system loading.
+- Developed the AuraGen system prompt.
+- Integrated the prompt builder with Gemini.
+- Updated ai_engine/llm.py.
+- Implemented React component generation using user requests and form context.
+- Successfully generated a multi-step financial form.
+
+## Day 5 Progress
+
+- Created automated UI generation test script.
+- Tested generation of multiple React components.
+- Generated FinancialWizard.jsx.
+- Generated RegistrationForm.jsx.
+- Generated ContactForm.jsx.
+- Tested design-system consistency across generated components.
+- Saved generated components in generated_components/.
+
+## AI Model
+
 Gemini 3.5 Flash-Lite
 
 ## Technologies
@@ -37,6 +70,7 @@ Gemini 3.5 Flash-Lite
 - Tailwind CSS
 
 ## Project Structure
+
 - backend/
 - ai_engine/
 - validator/
@@ -47,17 +81,20 @@ Gemini 3.5 Flash-Lite
 
 Install dependencies:
 
-```bash
 pip install -r requirements.txt
-```
 
 Run environment check:
 
-```bash
 python day1_check.py
-```
 
 ## Current Status
+
 Day 1 - Environment setup completed.
 
 Day 2 - Gemini integration and first React component generation completed.
+
+Day 3 - Design system development completed.
+
+Day 4 - AI prompt engineering and Gemini-powered UI generation completed.
+
+Day 5 - Multiple React component generation and testing completed.
