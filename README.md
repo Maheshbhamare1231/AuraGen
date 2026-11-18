@@ -98,3 +98,27 @@ Day 3 - Design system development completed.
 Day 4 - AI prompt engineering and Gemini-powered UI generation completed.
 
 Day 5 - Multiple React component generation and testing completed.
+
+## Day 6 – Structured Output Validation
+
+Implemented Pydantic-based validation for AI-generated React UI components.
+
+### Features
+- Defined UIComponentResponse schema.
+- Validated component name.
+- Validated generated code.
+- Validated supported programming languages.
+- Extracted React code from Markdown code blocks.
+- Integrated validation with Gemini UI generation.
+- Tested valid and invalid responses.
+- Tested actual Gemini-generated React components.
+
+### Validation Pipeline
+
+User Request → Gemini → React Code Extraction → Pydantic Validation → Validated UI Response
+
+### Files Created/Updated
+- backend/schemas.py
+- tests/test_validation.py
+- tests/test_ai_validation.py
+- ai_engine/llm.py
