@@ -47,3 +47,22 @@ Learned basic JavaScript programming and component validation for AuraGen.
 
 ### Learning Outcome
 Learned how to create and use JavaScript modules and run programs using Node.js and npm.
+
+
+## Day 3 – JSON Objects, Arrays and File Handling
+
+### Files Created
+- `ui.json` – Stores AuraGen component configuration.
+- `read-json.js` – Reads JSON data using the Node.js fs module.
+- `json-convert.js` – Converts JavaScript objects into JSON text.
+
+### Concepts Learned
+- JSON objects and arrays.
+- JSON.parse() and JSON.stringify().
+- Node.js File System (fs) module.
+- Reading data from JSON files.
+- Iterating through arrays using forEach().
+
+### Practical Learning
+Created a component configuration for the AuraGen AST Injector.
+The program identifies allowed and rejected UI components.

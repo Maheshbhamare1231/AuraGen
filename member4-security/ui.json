@@ -1,0 +1,24 @@
+
+{
+  "project": "AuraGen",
+  "module": "AST Injector",
+  "version": "1.0",
+  "components": [
+    {
+      "name": "Button",
+      "allowed": true
+    },
+    {
+      "name": "Card",
+      "allowed": true
+    },
+    {
+      "name": "Script",
+      "allowed": false
+    },
+    {
+      "name": "Input",
+      "allowed": true
+    }
+  ]
+}
