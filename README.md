@@ -122,3 +122,34 @@ User Request → Gemini → React Code Extraction → Pydantic Validation → Va
 - tests/test_validation.py
 - tests/test_ai_validation.py
 - ai_engine/llm.py
+
+
+## Day 7 – FastAPI Backend Integration
+
+### Objective
+Created a FastAPI backend to expose AuraGen's AI-powered UI generation and validation functionality through REST API endpoints.
+
+### Implemented Features
+- `GET /` – Checks whether the AuraGen API is running.
+- `GET /health` – Checks backend health.
+- `POST /generate-ui` – Accepts a UI simplification request, generates React JSX using Gemini, validates the response using Pydantic, and returns JSON.
+- Request validation using Pydantic.
+- Invalid requests are rejected with HTTP 422 before calling Gemini.
+- API documentation and testing through Swagger UI.
+
+### Sample API Request
+```json
+{
+  "user_request": "Simplify the financial form into two steps with a clean modern design.",
+  "form_context": "The existing form contains full name, email address and monthly income."
+}
+```
+
+### Testing Results
+- `GET /` – HTTP 200
+- `GET /health` – HTTP 200
+- `POST /generate-ui` with a valid request – HTTP 200
+- `POST /generate-ui` with an invalid short request – HTTP 422
+
+### Day 7 Outcome
+Successfully connected the Gemini generation and Pydantic validation pipeline to FastAPI. The backend can now receive requests through an API and return validated React component code.
