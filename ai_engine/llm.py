@@ -1,4 +1,4 @@
-
+from backend.schemas import validate_generated_ui
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -72,6 +72,23 @@ def generate_ui(user_request, form_context=""):
     response = llm.invoke(prompt)
 
     return extract_text(response.content)
+
+def generate_validated_ui(user_request, form_context=""):
+    """
+    Generate React UI using Gemini and validate
+    the response using Pydantic.
+    """
+
+    # Generate raw React code
+    raw_output = generate_ui(
+        user_request=user_request,
+        form_context=form_context
+    )
+
+    # Validate the AI-generated response
+    validated_response = validate_generated_ui(raw_output)
+
+    return validated_response
 
 
 if __name__ == "__main__":
