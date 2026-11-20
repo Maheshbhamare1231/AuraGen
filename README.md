@@ -153,3 +153,41 @@ Created a FastAPI backend to expose AuraGen's AI-powered UI generation and valid
 
 ### Day 7 Outcome
 Successfully connected the Gemini generation and Pydantic validation pipeline to FastAPI. The backend can now receive requests through an API and return validated React component code.
+
+
+## Day 8 – Babel JSX Validation Integration
+
+### Objective
+Integrated Node.js and Babel with the Python FastAPI backend to validate AI-generated React JSX syntax.
+
+### Technologies Used
+- Node.js
+- npm
+- @babel/parser
+- Python
+- FastAPI
+
+### Implementation
+1. Created a separate `babel-validator` Node.js project.
+2. Installed the `@babel/parser` package.
+3. Created `validator.js` to parse and validate React JSX.
+4. Created `backend/babel_client.py` to communicate with Node.js using Python subprocess.
+5. Integrated Babel validation into the `/generate-ui` FastAPI endpoint.
+
+### Testing Results
+- Valid JSX was successfully accepted.
+- Invalid JSX was successfully rejected.
+- Python-to-Node.js communication was tested.
+- FastAPI successfully returned generated JSX with Babel validation results.
+
+### Example Validation Response
+
+```json
+{
+  "valid": true,
+  "message": "React JSX syntax is valid."
+}
+```
+
+### Day 8 Outcome
+Successfully integrated Babel syntax validation into the AuraGen AI generation pipeline.
