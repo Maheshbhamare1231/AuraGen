@@ -66,3 +66,32 @@ Learned how to create and use JavaScript modules and run programs using Node.js 
 ### Practical Learning
 Created a component configuration for the AuraGen AST Injector.
 The program identifies allowed and rejected UI components.
+
+
+## Day 4: JavaScript Modules and Error Handling
+
+### Tasks Completed
+- Created reusable security functions.
+- Imported functions using require().
+- Checked allowed and rejected UI components.
+- Learned error handling using try...catch.
+- Tested invalid JSON data.
+- Handled file reading and JSON parsing errors.
+
+### Files Created
+- security-utils.js
+- test-security.js
+- error-handling.js
+
+### Concepts Learned
+- JavaScript functions
+- module.exports
+- require()
+- Array includes()
+- forEach()
+- try...catch
+- JSON parsing errors
+
+### Learning Outcome
+Learned how to create reusable security functions
+and handle errors in the AuraGen AST Injector module.
