@@ -20,3 +20,5 @@ __pycache__/
 
 # Generated temporary files
 *.log
+# Node.js dependencies
+**/node_modules/
