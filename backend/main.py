@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from ai_engine.llm import generate_validated_ui
+from ai_engine.prompts import get_cognitive_load_level
 from backend.babel_client import validate_jsx
 
 
@@ -25,6 +26,13 @@ class GenerateUIRequest(BaseModel):
     form_context: str = Field(
         default="",
         description="Existing form information or context"
+    )
+
+    cognitive_load_score: int | None = Field(
+        default=None,
+        ge=0,
+        le=100,
+        description="Cognitive load score between 0 and 100"
     )
 
 
@@ -57,13 +65,19 @@ def generate_ui_endpoint(request: GenerateUIRequest):
         # Step 1: Generate React component using Gemini
         result = generate_validated_ui(
             user_request=request.user_request,
-            form_context=request.form_context
+            form_context=request.form_context,
+            cognitive_load_score=request.cognitive_load_score
         )
 
         # Step 2: Validate generated JSX using Babel
         babel_result = validate_jsx(result.code)
 
-        # Step 3: Return generation and validation results
+        # Step 3: Detect cognitive load level
+        load_level = get_cognitive_load_level(
+            request.cognitive_load_score
+        )
+
+        # Step 4: Return generation and validation results
         return {
             "status": (
                 "success" if babel_result["valid"]
@@ -77,6 +91,10 @@ def generate_ui_endpoint(request: GenerateUIRequest):
             "code": result.code,
 
             "explanation": result.explanation,
+
+            "cognitive_load_score": request.cognitive_load_score,
+
+            "cognitive_load_level": load_level,
 
             "babel_validation": babel_result
         }
