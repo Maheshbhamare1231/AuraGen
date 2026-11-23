@@ -191,3 +191,29 @@ Integrated Node.js and Babel with the Python FastAPI backend to validate AI-gene
 
 ### Day 8 Outcome
 Successfully integrated Babel syntax validation into the AuraGen AI generation pipeline.
+
+## Day 9 – Cognitive Load Integration
+
+Implemented cognitive-load-aware UI generation.
+
+### Features
+- Accepts a cognitive load score from 0 to 100.
+- Classifies scores into three levels:
+  - Low: 0–39
+  - Medium: 40–69
+  - High: 70–100
+- Generates UI instructions based on the detected cognitive load.
+- Passes the score and instructions to the Gemini model.
+- Validates generated React JSX using Babel.
+- Returns the cognitive load score and detected level in the API response.
+
+### API Request Example
+
+POST `/generate-ui`
+
+```json
+{
+  "user_request": "Simplify this registration form.",
+  "form_context": "The form contains name, email, phone and employment details.",
+  "cognitive_load_score": 85
+}

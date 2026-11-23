@@ -1,9 +1,11 @@
+
 from backend.schemas import validate_generated_ui
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from ai_engine.prompts import build_ui_prompt
+
 
 # Load API key from .env
 load_dotenv()
@@ -12,6 +14,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 
 if not api_key:
     raise ValueError("Gemini API key not found in .env")
+
 
 # Gemini configuration
 llm = ChatGoogleGenerativeAI(
@@ -61,19 +64,32 @@ def test_connection():
         print(str(error)[:1000])
 
 
-def generate_ui(user_request, form_context=""):
-    """Generate a React component using AuraGen's design system."""
+def generate_ui(
+    user_request,
+    form_context="",
+    cognitive_load_score=None
+):
+    """
+    Generate a React component using AuraGen's
+    design system and cognitive load score.
+    """
 
     prompt = build_ui_prompt(
         user_request=user_request,
-        form_context=form_context
+        form_context=form_context,
+        cognitive_load_score=cognitive_load_score
     )
 
     response = llm.invoke(prompt)
 
     return extract_text(response.content)
 
-def generate_validated_ui(user_request, form_context=""):
+
+def generate_validated_ui(
+    user_request,
+    form_context="",
+    cognitive_load_score=None
+):
     """
     Generate React UI using Gemini and validate
     the response using Pydantic.
@@ -82,7 +98,8 @@ def generate_validated_ui(user_request, form_context=""):
     # Generate raw React code
     raw_output = generate_ui(
         user_request=user_request,
-        form_context=form_context
+        form_context=form_context,
+        cognitive_load_score=cognitive_load_score
     )
 
     # Validate the AI-generated response
@@ -96,11 +113,15 @@ if __name__ == "__main__":
     test_connection()
 
     print("\nGenerating AuraGen UI...")
-    
+
     try:
         generated_code = generate_ui(
             user_request="Simplify the financial form into smaller steps.",
-            form_context="The form contains name, email and monthly income."
+            form_context=(
+                "The form contains name, email "
+                "and monthly income."
+            ),
+            cognitive_load_score=85
         )
 
         print("\nGenerated React Component:\n")
