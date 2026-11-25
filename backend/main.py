@@ -17,7 +17,6 @@ app = FastAPI(
 
 # Request schema
 class GenerateUIRequest(BaseModel):
-
     user_request: str = Field(
         min_length=5,
         description="Description of the UI modification"
@@ -39,7 +38,6 @@ class GenerateUIRequest(BaseModel):
 # Root endpoint
 @app.get("/")
 def home():
-
     return {
         "message": "AuraGen API is running!",
         "status": "success"
@@ -49,7 +47,6 @@ def home():
 # Health check endpoint
 @app.get("/health")
 def health_check():
-
     return {
         "status": "healthy",
         "service": "AuraGen Backend"
@@ -59,9 +56,7 @@ def health_check():
 # UI generation endpoint
 @app.post("/generate-ui")
 def generate_ui_endpoint(request: GenerateUIRequest):
-
     try:
-
         # Step 1: Generate React component using Gemini
         result = generate_validated_ui(
             user_request=request.user_request,
@@ -83,25 +78,30 @@ def generate_ui_endpoint(request: GenerateUIRequest):
                 "success" if babel_result["valid"]
                 else "validation_failed"
             ),
-
             "component_name": result.component_name,
-
             "language": result.language,
-
             "code": result.code,
-
             "explanation": result.explanation,
-
             "cognitive_load_score": request.cognitive_load_score,
-
             "cognitive_load_level": load_level,
-
             "babel_validation": babel_result
         }
 
     except Exception as error:
+        error_message = str(error)
 
+        # Handle temporary Gemini service unavailability
+        if "503" in error_message or "UNAVAILABLE" in error_message:
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    "Gemini AI is temporarily unavailable due to high demand. "
+                    "Please try again after a short wait."
+                )
+            )
+
+        # Handle other generation errors
         raise HTTPException(
             status_code=500,
-            detail=f"UI generation failed: {str(error)}"
+            detail=f"UI generation failed: {error_message}"
         )
