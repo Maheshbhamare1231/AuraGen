@@ -155,3 +155,64 @@ if __name__ == "__main__":
     print("AuraGen Cognitive Load Prompt Test")
     print("----------------------------------")
     print(test_prompt)
+
+def build_repair_prompt(
+    invalid_code,
+    validation_error,
+    user_request="",
+    form_context="",
+    cognitive_load_score=None
+):
+    """
+    Build a prompt to repair invalid React JSX code.
+    """
+
+    design_system = load_design_system()
+
+    load_level = get_cognitive_load_level(
+        cognitive_load_score
+    )
+
+    return f"""
+You are AuraGen, an expert React and JSX debugging assistant.
+
+The previously generated React component contains a syntax error.
+
+YOUR TASK:
+Repair the provided React component.
+
+IMPORTANT RULES:
+1. Fix the reported JSX or JavaScript syntax error.
+2. Preserve the original component's purpose and functionality.
+3. Follow the AuraGen design system.
+4. Use functional React components.
+5. Use Tailwind CSS for styling.
+6. Preserve cognitive-load simplification requirements.
+7. Do not remove essential form fields or functionality.
+8. Return only complete, corrected React component code.
+9. Do not include Markdown code fences or explanations.
+10. Ensure all JSX tags, brackets and parentheses are correctly closed.
+
+AURAGEN DESIGN SYSTEM:
+{design_system}
+
+ORIGINAL USER REQUEST:
+{user_request}
+
+FORM CONTEXT:
+{form_context}
+
+COGNITIVE LOAD SCORE:
+{cognitive_load_score}
+
+COGNITIVE LOAD LEVEL:
+{load_level}
+
+BABEL VALIDATION ERROR:
+{validation_error}
+
+INVALID REACT CODE:
+{invalid_code}
+
+Return the complete corrected React component now.
+"""

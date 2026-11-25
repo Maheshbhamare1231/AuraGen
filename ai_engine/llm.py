@@ -4,7 +4,10 @@ import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from ai_engine.prompts import build_ui_prompt
+from ai_engine.prompts import (
+    build_ui_prompt,
+    build_repair_prompt
+)
 
 
 # Load API key from .env
@@ -131,3 +134,66 @@ if __name__ == "__main__":
         print("\nGeneration failed:")
         print(type(error).__name__)
         print(str(error)[:1000])
+
+def generate_self_healing_ui(
+    user_request,
+    form_context="",
+    cognitive_load_score=None,
+    max_repair_attempts=2
+):
+    """
+    Generate React UI, validate it using Pydantic
+    and Babel, and repair invalid JSX using Gemini.
+    """
+
+    from backend.babel_client import validate_jsx
+
+    # Step 1: Generate initial UI
+    raw_output = generate_ui(
+        user_request=user_request,
+        form_context=form_context,
+        cognitive_load_score=cognitive_load_score
+    )
+
+    # Step 2: Validate Gemini response using Pydantic
+    validated_response = validate_generated_ui(raw_output)
+
+    # Step 3: Validate JSX using Babel
+    babel_result = validate_jsx(validated_response.code)
+
+    repair_attempts = 0
+
+    # Step 4: Repair invalid JSX if necessary
+    while not babel_result.get("valid") and repair_attempts < max_repair_attempts:
+
+        repair_attempts += 1
+
+        repair_prompt = build_repair_prompt(
+            invalid_code=validated_response.code,
+            validation_error=babel_result.get("message", "Unknown JSX error"),
+            user_request=user_request,
+            form_context=form_context,
+            cognitive_load_score=cognitive_load_score
+        )
+
+        # Ask Gemini to repair the code
+        repair_output = extract_text(
+            llm.invoke(repair_prompt).content
+        )
+
+        # Validate repaired response using Pydantic
+        validated_response = validate_generated_ui(repair_output)
+
+        # Validate repaired JSX using Babel
+        babel_result = validate_jsx(validated_response.code)
+
+    # Step 5: Return complete result
+    return {
+        "component_name": validated_response.component_name,
+        "language": validated_response.language,
+        "code": validated_response.code,
+        "explanation": validated_response.explanation,
+        "babel_validation": babel_result,
+        "self_healed": repair_attempts > 0 and babel_result.get("valid", False),
+        "repair_attempts": repair_attempts
+    }
